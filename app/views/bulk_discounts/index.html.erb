@@ -1,0 +1,26 @@
+<div class="nav-container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <p class="navbar-text"><%= @merchant.name %></p>
+    <ul class="nav navbar-nav">
+      <li><%= link_to 'Dashboard', merchant_dashboard_index_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Items', merchant_items_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Invoices', merchant_invoices_path, class: 'link_1', style: 'pull-right' %>
+    </ul>
+  </nav>
+</div>
+
+<div class="discount-index">
+  <h3><%= "Your Bulk Discounts" %></h3>
+  <p><%= link_to "Create New Bulk Discount", new_merchant_bulk_discount_path(@merchant) %></p>
+
+  <div class="bulkdiscounts"><% @bulk_discounts.each do |bulk_discount| %>
+    <div id="discount-<%=bulk_discount.id%>">
+      <p>Bulk Discount: <%= bulk_discount.id %>
+       -- save <%= bulk_discount.discount_percent %>%
+       when ordering <%= bulk_discount.threshold %> items.</p>
+      <p><%= link_to "View this Discount" , merchant_bulk_discount_path(@merchant, bulk_discount) %>
+         <%= button_to "Delete", merchant_bulk_discount_path(@merchant, bulk_discount), method: :delete %> </p>
+    </div>
+    <% end %>
+  </div>
+</div>
