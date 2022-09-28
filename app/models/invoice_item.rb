@@ -7,6 +7,7 @@ class InvoiceItem < ApplicationRecord
 
   belongs_to :invoice
   belongs_to :item
+  has_many :bulk_discounts, through: :item
 
   enum status: [:pending, :packaged, :shipped]
 
@@ -15,7 +16,7 @@ class InvoiceItem < ApplicationRecord
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
 
-  def applied_discount
-    select('item.merchant.bulk_discounts')
-  end
+  # def applied_discount
+  #   select('item.merchant.bulk_discounts')
+  # end
 end

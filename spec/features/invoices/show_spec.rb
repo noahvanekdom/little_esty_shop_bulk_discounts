@@ -5,7 +5,7 @@ RSpec.describe 'invoices show' do
     @merchant_1 = Merchant.create!(name: 'Hair Care')
     @merchant_2 = Merchant.create!(name: 'Jewelry')
 
-    @bulk_discount_1 = @merchant_1.bulk_discounts.create!(discount_percent: 15, quantity_threshold: 10)
+    @bulk_discount_1 = @merchant_1.bulk_discounts.create!(discount_percent: 15, threshold: 10)
 
     @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant_1.id, status: 1)
     @item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: @merchant_1.id)

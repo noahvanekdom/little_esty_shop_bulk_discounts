@@ -26,7 +26,7 @@ RSpec.describe Invoice, type: :model do
       expect(@invoice_1.total_revenue).to eq(100)
     end
 
-    describe "#discounted_revenue" do
+    describe "revenues" do
       before(:each) do
         @merchant_1 = Merchant.create!(name: 'Hair Care')
         @merchant_2 = Merchant.create!(name: 'Sporty Spice')
@@ -52,18 +52,57 @@ RSpec.describe Invoice, type: :model do
         @invoice_item_2 =  InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_2.id, quantity: 20, unit_price: 15, status: 2)
         @invoice_item_3 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_3.id, quantity: 1, unit_price: 10, status: 1)
         invoice_item_4 = InvoiceItem.create!(invoice_id: @invoice_4.id, item_id: @item_3.id, quantity: 100, unit_price: 50, status: 2)
-        @invoice_item_4 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 22, unit_price: 10, status: 1)
+        @invoice_item_4 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 22, unit_price: 10, status: 2)
+        @invoice_item_5 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_4.id, quantity: 40, unit_price: 15, status: 2)
 
 
         @bulk_discount_1 = @merchant_1.bulk_discounts.create!(discount_percent: 20, threshold: 10)
         @bulk_discount_2 = @merchant_1.bulk_discounts.create!(discount_percent: 10, threshold: 5)
+        @bulk_discount_3 = @merchant_2.bulk_discounts.create!(discount_percent: 20, threshold: 11)
       end
 
-      it "returns the revenue from an invoice after discounts (if they apply)" do
-        expect(@invoice_1.discounted_revenue).to eq(82.0)
-        expect(@invoice_2.discounted_revenue).to eq(60.0)
-        expect(@invoice_3.discounted_revenue).to eq(0.0)
+      describe "#merchant_revenue" do
+        it "returns the total revenue for a given merchant" do
+          expect(@invoice_1.merchant_revenue(@merchant_1)).to eq 410
+        end
       end
+
+      describe "#merchant_discount" do
+        it "returns the amount removed from the invoice by discounts for a given merchant" do
+          expect(@invoice_1.merchant_discount(@merchant_1)).to eq 82
+        end
+
+        it "returns 0 if no discounts apply" do
+          expect(@invoice_3.merchant_discount(@merchant_1)).to eq(0.0)
+        end
+      end
+
+      describe "#merchant_discounted_revenue" do
+        it "returns the total revenue for a merchant from an invoice after applied discounts" do
+          expect(@invoice_1.merchant_discounted_revenue(@merchant_1)).to eq 328
+        end
+      end
+
+
+      describe "#invoice_discount" do
+        it "returns the total discount removed from an invoice revenue" do
+          expect(@invoice_1.invoice_discount).to eq 202
+        end
+        it "the total discount is equal to the amount each merchant is discounting their products" do
+          expect(@invoice_1.invoice_discount).to eq(@invoice_1.merchant_discount(@merchant_1) + @invoice_1.merchant_discount(@merchant_2))
+        end
+      end
+
+      describe "#invoice_discounted_revenue" do
+        it "returns the total revenue of an invoice after discounts" do
+          expect(@invoice_1.invoice_discounted_revenue).to eq 808
+        end
+        it "the total is equal to the merchant total of all merchants" do
+          expect(@invoice_1.invoice_discounted_revenue).to eq(@invoice_1.merchant_discounted_revenue(@merchant_1) + @invoice_1.merchant_discounted_revenue(@merchant_2))
+        end
+      end
+
+
     end
   end
 end
