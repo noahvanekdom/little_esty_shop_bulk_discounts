@@ -100,4 +100,30 @@ RSpec.describe 'merchant dashboard' do
       expect(page).to_not have_content("Bulk Discount: #{@bulk_discount1.id}")
     end
   end
+
+  describe "holiday header" do
+    before(:each) do
+      visit merchant_bulk_discounts_path(@merchant1)
+    end
+    it 'has a section with header "Upcoming Holidays"' do
+
+      within 'div.upcoming_holidays' do
+        expect(page).to have_content("Upcoming Holidays")
+      end
+    end
+
+    it 'it lists the next 3 US holidays' do
+      holiday = HolidayService.new
+
+        expect(page).to have_content(holiday.upcoming_us_holidays[0][:name])
+        expect(page).to have_content(holiday.upcoming_us_holidays[0][:date])
+
+        expect(page).to have_content(holiday.upcoming_us_holidays[1][:name])
+        expect(page).to have_content(holiday.upcoming_us_holidays[1][:date])
+
+        expect(page).to have_content(holiday.upcoming_us_holidays[2][:name])
+        expect(page).to have_content(holiday.upcoming_us_holidays[2][:date])
+    end
+  end
 end
+
