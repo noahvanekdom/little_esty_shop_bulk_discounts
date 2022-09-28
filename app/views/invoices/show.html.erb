@@ -18,9 +18,12 @@
     <strong>Status: </strong><%= @invoice.status %>
   </div>
   <br>
-
-  <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
-  <p>Total Revenue: <%= @invoice.total_revenue %></p>
+  <div id="revenues">
+    <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
+    <p>Revenue Before Discounts: <%= @invoice.total_revenue %></p>
+    <p>My Revenue Before Discounts: $<%= @invoice.merchant_revenue(@merchant) %>0
+    <p>My Revenue After Discounts: $<%= @invoice.merchant_discounted_revenue(@merchant) %>0
+  </div>
 
 
   <h4>Customer:</h4>

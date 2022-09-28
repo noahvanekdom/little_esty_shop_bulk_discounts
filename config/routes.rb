@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     resources :bulk_discounts
   end
 
+  root 'welcome#index'
+
   namespace :admin do
     resources :dashboard, only: [:index]
     resources :merchants, except: [:destroy]

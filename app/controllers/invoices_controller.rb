@@ -3,7 +3,7 @@ class InvoicesController < ApplicationController
   before_action :find_merchant, only: [:index]
 
   def index
-    @invoices = @merchant.invoices
+    @invoices = @merchant.invoices.distinct
   end
 
   def show
@@ -17,6 +17,7 @@ class InvoicesController < ApplicationController
   end
 
   private
+
   def invoice_params
     params.require(:invoice).permit(:status)
   end
