@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :bulk_discounts
   end
 
-  resources :welcome, only: [:index]
+  root 'welcome#index'
 
   namespace :admin do
     resources :dashboard, only: [:index]
