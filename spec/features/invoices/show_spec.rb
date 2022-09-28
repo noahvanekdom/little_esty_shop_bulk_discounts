@@ -117,7 +117,7 @@ RSpec.describe 'invoices show' do
     before(:each) do
       visit merchant_invoice_path(@merchant_1, @invoice_1)
     end
-    it "next to each invoice item, i see a link to the discount show page for the applicable discount (if there is any)" do
+    it "next to each invoice item, i see a link to the discount show page for the best applicable discount (if there are any)" do
       within "#the-status-#{@ii_1.id}" do
         expect(page).to have_link "Best Discount"
       end
