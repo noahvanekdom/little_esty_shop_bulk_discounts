@@ -115,14 +115,14 @@ RSpec.describe 'merchant dashboard' do
     it 'it lists the next 3 US holidays' do
       holiday = HolidayService.new
 
-        expect(page).to have_content(holiday.upcoming_us_holidays[0][:name])
-        expect(page).to have_content(holiday.upcoming_us_holidays[0][:date])
+      expect(page).to have_content(holiday.upcoming_us_holidays[0][:name])
+      expect(page).to have_content(holiday.upcoming_us_holidays[0][:date])
 
-        expect(page).to have_content(holiday.upcoming_us_holidays[1][:name])
-        expect(page).to have_content(holiday.upcoming_us_holidays[1][:date])
+      expect(page).to have_content(holiday.upcoming_us_holidays[1][:name])
+      expect(page).to have_content(holiday.upcoming_us_holidays[1][:date])
 
-        expect(page).to have_content(holiday.upcoming_us_holidays[2][:name])
-        expect(page).to have_content(holiday.upcoming_us_holidays[2][:date])
+      expect(page).to have_content(holiday.upcoming_us_holidays[2][:name])
+      expect(page).to have_content(holiday.upcoming_us_holidays[2][:date])
     end
   end
 end
