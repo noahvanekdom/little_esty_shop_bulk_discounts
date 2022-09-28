@@ -111,9 +111,16 @@ RSpec.describe 'invoices show' do
         expect(page).to have_content(@invoice_1.merchant_revenue(@merchant_1))
       end
     end
-
-    it 'displays the discounted revenue' do
-    end
   end
 
+  describe "link to discount show" do
+    before(:each) do
+      visit merchant_invoice_path(@merchant_1, @invoice_1)
+    end
+    it "next to each invoice item, i see a link to the discount show page for the best applicable discount (if there are any)" do
+      within "#the-status-#{@ii_1.id}" do
+        expect(page).to have_link "Best Discount"
+      end
+    end
+  end
 end

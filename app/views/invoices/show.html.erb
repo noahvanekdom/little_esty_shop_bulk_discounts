@@ -51,11 +51,15 @@
             <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
                                             <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
                                             <%= f.submit 'Update Invoice' %>
-                                          <% end %></td><br/>
+                                          <% end %></td>
+            <td style="text-align:center"><% if i.find_discount == nil %>
+              <%= "No Discount Applicable" %>
+            <% else %>
+              <%= link_to "Best Discount", merchant_bulk_discount_path(@merchant, i.find_discount.id)%>
+            <% end %></td><br/>
           </tr>
         </section>
       <% end %>
     </tbody>
   </table>
-
 </body>

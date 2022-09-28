@@ -78,7 +78,7 @@ RSpec.describe 'merchant dashboard' do
     end
   end
 
-  describe ":editing discounts:" do
+  describe ":deleting discounts:" do
     it "next to each discount, I see a button to delete that discount" do
       within "#discount-#{@bulk_discount1.id}" do
         expect(page).to have_content(@bulk_discount1.threshold)
