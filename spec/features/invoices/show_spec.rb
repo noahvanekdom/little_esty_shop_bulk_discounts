@@ -102,7 +102,14 @@ RSpec.describe 'invoices show' do
   end
 
   describe "displaying revenue" do
-    it 'displays the total revenue' do
+    before(:each) do
+      visit merchant_invoice_path(@merchant_1, @invoice_1)
+    end
+    it 'displays the total merchant revenue for an invoice, and the revenue after discounts' do
+      within("#revenues") do
+        expect(page).to have_content(@invoice_1.merchant_discounted_revenue(@merchant_1))
+        expect(page).to have_content(@invoice_1.merchant_revenue(@merchant_1))
+      end
     end
 
     it 'displays the discounted revenue' do

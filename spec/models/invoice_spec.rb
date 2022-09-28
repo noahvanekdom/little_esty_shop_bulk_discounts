@@ -101,8 +101,6 @@ RSpec.describe Invoice, type: :model do
           expect(@invoice_1.invoice_discounted_revenue).to eq(@invoice_1.merchant_discounted_revenue(@merchant_1) + @invoice_1.merchant_discounted_revenue(@merchant_2))
         end
       end
-
-
     end
   end
 end
